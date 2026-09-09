@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ckb" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HLS Player with Sport Logo</title>
+
+  <!-- Video.js CSS -->
+  <link href="https://vjs.zencdn.net/8.10.0/video-js.css" rel="stylesheet" />
+
+  <style>
+    body {
+      background-color: #0d1117;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      font-family: Tahoma, sans-serif;
+    }
+
+    /* کانتێنەری سەرەکی پلەیەرەکە */
+    .video-container {
+      position: relative;
+      width: 100%;
+      max-width: 900px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    /* دیزاین و شوێنی لۆگۆکە لە سوچی سەرەوەی دەستەڕاست */
+    .player-logo {
+      position: absolute;
+      top: 15px;            /* فاصلە لە سەرەوە */
+      right: 15px;          /* خستنە سوچی سەرەوەی دەستەڕاست */
+      width: 160px;         /* قەبارەی گونجاو بۆ ئەم لۆگۆیە */
+      height: auto;
+      z-index: 10;          /* دەیکاتە سەرەوەی ڤیدیۆکە */
+      pointer-events: none;/* بۆ ئەوەی ڕێگری لە کاتیکردنی لەسەر کلیکەکانی ڤیدیۆکە نەکات */
+      filter: drop-shadow(0px 2px 4px rgba(0,0,0,0.6)); /* سیبەری سپی/ڕەش بۆ ئەوەی ڕوونتر دیار بێت */
+    }
+
+    /* ڕێکخستنی قەبارەی ڕاستەقینەی پلەیەرەکە */
+    .video-js {
+      width: 100%;
+      height: auto;
+      aspect-ratio: 16 / 9;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="video-container">
+    <!-- لۆگۆی دیاریکراوی SPORT لە سوچی سەرەوەی دەستەڕاست -->
+    <img src="LOGO2018.png" alt="SPORT Logo" class="player-logo">
+
+    <!-- پلەیەری ڤیدیۆ -->
+    <video
+      id="my-video"
+      class="video-js vjs-big-play-centered vjs-theme-city"
+      controls
+      preload="auto"
+      data-setup="{}">
+      <source src="https://vsd115.okcdn.ru/hls/17817329928941.m3u8/sig/huptevTjsy8/expires/1789059055102/srcIp/62.201.244.135/urls/178.237.23.89/clientType/0/srcAg/CHROME/mid/15887009652461/17817329928941_high/index.m3u8" type="application/x-mpegURL">
+      تێبینی: وێبگەڕەکەت پشتگیری لەم ڤیدیۆیە ناکات.
+    </video>
+  </div>
+
+  <!-- Video.js JS -->
+  <script src="https://vjs.zencdn.net/8.10.0/video.min.js"></script>
+
+</body>
+</html>
