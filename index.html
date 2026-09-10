@@ -27,30 +27,88 @@
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
       border-radius: 12px;
       overflow: hidden;
+      background-color: #000;
     }
 
-    /* دیزاینی لۆگۆ بۆ شاشەی کۆمپیوتەر (دەسکتۆپ) */
-    .player-logo {
+    /* کانتێنەری لۆگۆ و دەقەکان */
+    .logo-box {
       position: absolute;
       top: 15px;
       right: 15px;
-      width: 160px; /* قەبارەی سەرەکی بۆ کۆمپیوتەر */
-      height: auto;
       z-index: 10;
       pointer-events: none;
-      filter: drop-shadow(0px 2px 4px rgba(0,0,0,0.6));
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      transition: all 0.5s ease;
     }
 
-    /* ڕێکخستنی تایبەت بۆ شاشەی مۆبایل (کەمتر لە 768px) */
+    /* دیزاینی لۆگۆ */
+    .player-logo {
+      width: 160px;
+      height: auto;
+      filter: drop-shadow(0px 2px 4px rgba(0,0,0,0.6));
+      transition: all 0.5s ease;
+    }
+
+    /* دەقەکانی ژێر لۆگۆ کاتێک ستریم پچڕاوە */
+    .stream-message {
+      display: none;
+      color: #ffffff;
+      text-align: center;
+      margin-top: 15px;
+    }
+
+    .stream-message h2 {
+      margin: 0 0 10px 0;
+      font-size: 20px;
+      color: #ffd700;
+    }
+
+    .stream-message p {
+      margin: 0;
+      font-size: 14px;
+      color: #cccccc;
+    }
+
+    /* ستایلی سەرەکی کاتێک ستریم نەماوە (لۆگۆ دێتە ناوەڕاست) */
+    .stream-offline .logo-box {
+      top: 50%;
+      left: 50%;
+      right: auto;
+      transform: translate(-50%, -50%);
+      align-items: center;
+      width: 90%;
+    }
+
+    .stream-offline .player-logo {
+      width: 200px; /* قەبارەی لۆگۆ لە ناوەڕاستدا */
+    }
+
+    .stream-offline .stream-message {
+      display: block; /* دیاریکردنی دەقەکان */
+    }
+
+    /* ڕێکخستنی تایبەت بۆ شاشەی مۆبایل */
     @media (max-width: 768px) {
       .player-logo {
-        width: 80px;  /* بچووککردنەوەی قەبارەی لۆگۆ لە مۆبایلدا */
-        top: 8px;     /* کەمکردنەوەی فاصلەی سەرەوە */
-        right: 8px;   /* کەمکردنەوەی فاصلەی لای ڕاست */
+        width: 80px;
+      }
+      .logo-box {
+        top: 8px;
+        right: 8px;
+      }
+      .stream-offline .player-logo {
+        width: 130px;
+      }
+      .stream-offline .stream-message h2 {
+        font-size: 16px;
+      }
+      .stream-offline .stream-message p {
+        font-size: 12px;
       }
     }
 
-    /* ڕێکخستنی قەبارەی ڕاستەقینەی پلەیەرەکە */
     .video-js {
       width: 100%;
       height: auto;
@@ -60,9 +118,16 @@
 </head>
 <body>
 
-  <div class="video-container">
-    <!-- لۆگۆی دیاریکراوی SPORT -->
-    <img src="LOGO2018.png" alt="SPORT Logo" class="player-logo">
+  <div class="video-container" id="videoContainer">
+    
+    <!-- کانتێنەری لۆگۆ و ئاگادارییەکان -->
+    <div class="logo-box">
+      <img src="LOGO2018.png" alt="SPORT Logo" class="player-logo">
+      <div class="stream-message">
+        <h2>هەموو وەرزشێک لەماڵەکەتدا</h2>
+        <p>ببورن لە ئێستادا ستریم بچڕاوە لە نزیکترین کاتدا دەگەڕیینەوە</p>
+      </div>
+    </div>
 
     <!-- پلەیەری ڤیدیۆ -->
     <video
@@ -78,6 +143,25 @@
 
   <!-- Video.js JS -->
   <script src="https://vjs.zencdn.net/8.10.0/video.min.js"></script>
+
+  <script>
+    const player = videojs('my-video');
+    const container = document.getElementById('videoContainer');
+
+    // کاتێک هەڵەیەک لە ستریمەکە ڕووبدات یان پچڕابێت
+    player.on('error', function() {
+      container.classList.add('stream-offline');
+    });
+
+    // کاتێک ستریمەکە کاربکات یان دەستپێبکاتەوە
+    player.on('playing', function() {
+      container.classList.remove('stream-offline');
+    });
+
+    player.on('loadeddata', function() {
+      container.classList.remove('stream-offline');
+    });
+  </script>
 
 </body>
 </html>
