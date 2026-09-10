@@ -9,6 +9,14 @@
   <link href="https://vjs.zencdn.net/8.10.0/video-js.css" rel="stylesheet" />
 
   <style>
+    /* 1. بەستنەوەی فۆنتی ڕەسەن */
+    @font-face {
+      font-family: 'Rabar';
+      src: url('Rabar.ttf') format('truetype');
+      font-weight: normal;
+      font-style: normal;
+    }
+
     body {
       background-color: #0d1117;
       display: flex;
@@ -16,7 +24,7 @@
       align-items: center;
       min-height: 100vh;
       margin: 0;
-      font-family: Tahoma, sans-serif;
+      font-family: 'Rabar', Tahoma, sans-serif;
     }
 
     /* کانتێنەری سەرەکی پلەیەرەکە */
@@ -30,7 +38,7 @@
       background-color: #000;
     }
 
-    /* کانتێنەری لۆگۆ و دەقەکان */
+    /* کانتێنەری لۆگۆ و دەقەکان - گۆڕینی transition بۆ step کەت */
     .logo-box {
       position: absolute;
       top: 15px;
@@ -40,7 +48,7 @@
       display: flex;
       flex-direction: column;
       align-items: flex-end;
-      transition: all 0.5s ease;
+      transition: all 0s step-end; /* بڕینی خێرا بە بێ حەرەکە */
     }
 
     /* دیزاینی لۆگۆ */
@@ -48,7 +56,7 @@
       width: 160px;
       height: auto;
       filter: drop-shadow(0px 2px 4px rgba(0,0,0,0.6));
-      transition: all 0.5s ease;
+      transition: all 0s step-end; /* بڕینی خێرا بە بێ حەرەکە */
     }
 
     /* دەقەکانی ژێر لۆگۆ کاتێک ستریم پچڕاوە */
@@ -57,21 +65,24 @@
       color: #ffffff;
       text-align: center;
       margin-top: 15px;
+      font-family: 'Rabar', sans-serif;
     }
 
     .stream-message h2 {
       margin: 0 0 10px 0;
-      font-size: 20px;
+      font-size: 22px;
       color: #ffd700;
+      font-family: 'Rabar', sans-serif;
     }
 
     .stream-message p {
       margin: 0;
-      font-size: 14px;
+      font-size: 15px;
       color: #cccccc;
+      font-family: 'Rabar', sans-serif;
     }
 
-    /* ستایلی سەرەکی کاتێک ستریم نەماوە (لۆگۆ دێتە ناوەڕاست) */
+    /* ستایلی کاتێک ستریم نەماوە (لۆگۆ بە کەت دەچێتە ناوەڕاست) */
     .stream-offline .logo-box {
       top: 50%;
       left: 50%;
@@ -82,11 +93,11 @@
     }
 
     .stream-offline .player-logo {
-      width: 200px; /* قەبارەی لۆگۆ لە ناوەڕاستدا */
+      width: 200px;
     }
 
     .stream-offline .stream-message {
-      display: block; /* دیاریکردنی دەقەکان */
+      display: block;
     }
 
     /* ڕێکخستنی تایبەت بۆ شاشەی مۆبایل */
@@ -102,10 +113,10 @@
         width: 130px;
       }
       .stream-offline .stream-message h2 {
-        font-size: 16px;
+        font-size: 18px;
       }
       .stream-offline .stream-message p {
-        font-size: 12px;
+        font-size: 13px;
       }
     }
 
@@ -148,12 +159,10 @@
     const player = videojs('my-video');
     const container = document.getElementById('videoContainer');
 
-    // کاتێک هەڵەیەک لە ستریمەکە ڕووبدات یان پچڕابێت
     player.on('error', function() {
       container.classList.add('stream-offline');
     });
 
-    // کاتێک ستریمەکە کاربکات یان دەستپێبکاتەوە
     player.on('playing', function() {
       container.classList.remove('stream-offline');
     });
