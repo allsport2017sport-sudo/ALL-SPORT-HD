@@ -9,10 +9,10 @@
   <link href="https://vjs.zencdn.net/8.10.0/video-js.css" rel="stylesheet" />
 
   <style>
-    /* 1. بەستنەوەی فۆنتی ڕەسەن */
+    /* 1. بەستنەوەی فۆنتی نوێ */
     @font-face {
-      font-family: 'Rabar';
-      src: url('Rabar.ttf') format('truetype');
+      font-family: 'AllSportFont-Regular';
+      src: url('AllSportFont-Regular.ttf') format('truetype');
       font-weight: normal;
       font-style: normal;
     }
@@ -24,7 +24,7 @@
       align-items: center;
       min-height: 100vh;
       margin: 0;
-      font-family: 'Rabar', Tahoma, sans-serif;
+      font-family: 'AllSportFont-Regular', Tahoma, sans-serif;
     }
 
     /* کانتێنەری سەرەکی پلەیەرەکە */
@@ -38,7 +38,7 @@
       background-color: #000;
     }
 
-    /* کانتێنەری لۆگۆ و دەقەکان - گۆڕینی transition بۆ step کەت */
+    /* کانتێنەری لۆگۆ و دەقەکان */
     .logo-box {
       position: absolute;
       top: 15px;
@@ -48,7 +48,7 @@
       display: flex;
       flex-direction: column;
       align-items: flex-end;
-      transition: all 0s step-end; /* بڕینی خێرا بە بێ حەرەکە */
+      transition: all 0s step-end;
     }
 
     /* دیزاینی لۆگۆ */
@@ -56,7 +56,7 @@
       width: 160px;
       height: auto;
       filter: drop-shadow(0px 2px 4px rgba(0,0,0,0.6));
-      transition: all 0s step-end; /* بڕینی خێرا بە بێ حەرەکە */
+      transition: all 0s step-end;
     }
 
     /* دەقەکانی ژێر لۆگۆ کاتێک ستریم پچڕاوە */
@@ -65,24 +65,24 @@
       color: #ffffff;
       text-align: center;
       margin-top: 15px;
-      font-family: 'Rabar', sans-serif;
+      font-family: 'AllSportFont-Regular', sans-serif;
     }
 
     .stream-message h2 {
       margin: 0 0 10px 0;
       font-size: 22px;
       color: #ffd700;
-      font-family: 'Rabar', sans-serif;
+      font-family: 'AllSportFont-Regular', sans-serif;
     }
 
     .stream-message p {
       margin: 0;
       font-size: 15px;
       color: #cccccc;
-      font-family: 'Rabar', sans-serif;
+      font-family: 'AllSportFont-Regular', sans-serif;
     }
 
-    /* ستایلی کاتێک ستریم نەماوە (لۆگۆ بە کەت دەچێتە ناوەڕاست) */
+    /* ستایلی کاتێک ستریم نەماوە */
     .stream-offline .logo-box {
       top: 50%;
       left: 50%;
