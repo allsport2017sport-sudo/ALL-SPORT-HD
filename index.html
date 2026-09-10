@@ -3,81 +3,45 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>HLS Player with Sport Logo</title>
-
-  <!-- Video.js CSS -->
+  <title>Alwan Sport - Live</title>
   <link href="https://vjs.zencdn.net/8.10.0/video-js.css" rel="stylesheet" />
-
   <style>
-    body {
-      background-color: #0d1117;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      margin: 0;
-      font-family: Tahoma, sans-serif;
-    }
-
-    /* کانتێنەری سەرەکی پلەیەرەکە */
-    .video-container {
-      position: relative;
-      width: 100%;
-      max-width: 900px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-      border-radius: 12px;
-      overflow: hidden;
-    }
-
-    /* دیزاینی لۆگۆ بۆ شاشەی کۆمپیوتەر (دەسکتۆپ) */
-    .player-logo {
-      position: absolute;
-      top: 15px;
-      right: 15px;
-      width: 160px; /* قەبارەی سەرەکی بۆ کۆمپیوتەر */
-      height: auto;
-      z-index: 10;
-      pointer-events: none;
-      filter: drop-shadow(0px 2px 4px rgba(0,0,0,0.6));
-    }
-
-    /* ڕێکخستنی تایبەت بۆ شاشەی مۆبایل (کەمتر لە 768px) */
-    @media (max-width: 768px) {
-      .player-logo {
-        width: 70px;  /* بچووککردنەوەی قەبارەی لۆگۆ لە مۆبایلدا */
-        top: 8px;     /* کەمکردنەوەی فاصلەی سەرەوە */
-        right: 8px;   /* کەمکردنەوەی فاصلەی لای ڕاست */
-      }
-    }
-
-    /* ڕێکخستنی قەبارەی ڕاستەقینەی پلەیەرەکە */
-    .video-js {
-      width: 100%;
-      height: auto;
-      aspect-ratio: 16 / 9;
-    }
+    body { background:#0d1117; display:flex; flex-direction:column; justify-content:center; align-items:center; min-height:100vh; margin:0; font-family:Tahoma; gap:15px; }
+    .video-container { position:relative; width:100%; max-width:900px; box-shadow:0 10px 30px rgba(0,0,0,.5); border-radius:12px; overflow:hidden; background:#000; }
+    .player-logo { position:absolute; top:15px; right:15px; width:110px; z-index:10; pointer-events:none; filter:drop-shadow(0 2px 4px rgba(0,0,0,.6)); opacity:0.9; }
+    @media (max-width:768px){ .player-logo{width:60px; top:8px; right:8px;} }
+    .video-js{width:100%; height:auto; aspect-ratio:16/9;}
+    .controls-box{background:#161b22; padding:12px; border-radius:8px; width:100%; max-width:900px; box-sizing:border-box;}
+    .controls-box input{width:100%; padding:10px; border-radius:6px; border:1px solid #30363d; background:#0d1117; color:#fff; direction:ltr;}
+    .controls-box label{color:#8b949e; font-size:13px; display:block; margin-bottom:6px;}
   </style>
 </head>
 <body>
 
   <div class="video-container">
-    <!-- لۆگۆی دیاریکراوی SPORT -->
-    <img src="LOGO2018.png" alt="SPORT Logo" class="player-logo">
-
-    <!-- پلەیەری ڤیدیۆ -->
-    <video
-      id="my-video"
-      class="video-js vjs-big-play-centered vjs-theme-city"
-      controls
-      preload="auto"
-      data-setup="{}">
-      <source src="https://vsd115.okcdn.ru/hls/17817329928941.m3u8/sig/huptevTjsy8/expires/1789059055102/srcIp/62.201.244.135/urls/178.237.23.89/clientType/0/srcAg/CHROME/mid/15887009652461/17817329928941_high/index.m3u8" type="application/x-mpegURL">
-      تێبینی: وێبگەڕەکەت پشتگیری لەم ڤیدیۆیە ناکات.
+    <!-- ئەگەر LOGO2018.png لە هەمان فولدەر نیە، لینکی ڕاستەوخۆی GitHub Rawـەکەی لێرە دابنێ -->
+    <img src="LOGO2018.png" alt="SPORT" class="player-logo" onerror="this.style.display='none'">
+    <video id="my-video" class="video-js vjs-big-play-centered" controls preload="auto" data-setup="{}">
+      <source id="hls-source" src="https://vsd123.okcdn.ru/hls/21847490235045.m3u8/sig/iD9OVgiCLEw/expires/1789097141398/srcIp/62.201.244.135/urls/178.237.23.122/clientType/0/srcAg/GECKO/mid/17725702938277/video.m3u8" type="application/x-mpegURL">
     </video>
   </div>
 
-  <!-- Video.js JS -->
-  <script src="https://vjs.zencdn.net/8.10.0/video.min.js"></script>
+  <!-- بۆ نوێکردنەوەی خێرا کاتێک لینکەکە دەمرێت -->
+  <div class="controls-box">
+    <label>کاتێک ڤیدیۆکە وەستا، لینکی m3u8ـی نوێ لێرە Paste بکە:</label>
+    <input type="text" id="newLink" placeholder="https://vsd.../video.m3u8">
+  </div>
 
+  <script src="https://vjs.zencdn.net/8.10.0/video.min.js"></script>
+  <script>
+    const player = videojs('my-video');
+    const input = document.getElementById('newLink');
+    input.addEventListener('change', function(){
+      if(this.value.includes('m3u8')){
+        player.src({src: this.value, type: 'application/x-mpegURL'});
+        player.play();
+      }
+    });
+  </script>
 </body>
 </html>
