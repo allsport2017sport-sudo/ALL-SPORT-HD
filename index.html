@@ -100,6 +100,25 @@
       display: block;
     }
 
+    /* ستایلی تیکەری خوارەوەی شاشە */
+    .ticker-bar {
+      position: absolute;
+      bottom: 45px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 20;
+      background: rgba(0, 0, 0, 0.75);
+      color: #ffd700;
+      padding: 8px 20px;
+      border-radius: 6px;
+      border: 1px solid rgba(255, 215, 0, 0.4);
+      font-size: 16px;
+      white-space: nowrap;
+      pointer-events: none;
+      display: none;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    }
+
     /* ڕێکخستنی تایبەت بۆ شاشەی مۆبایل */
     @media (max-width: 768px) {
       .player-logo {
@@ -117,6 +136,14 @@
       }
       .stream-offline .stream-message p {
         font-size: 13px;
+      }
+      .ticker-bar {
+        bottom: 35px;
+        font-size: 12px;
+        padding: 6px 12px;
+        width: 85%;
+        white-space: normal;
+        text-align: center;
       }
     }
 
@@ -140,6 +167,11 @@
       </div>
     </div>
 
+    <!-- تیکەری خوارەوە -->
+    <div class="ticker-bar" id="tickerBar">
+      بۆ بینینی تەواوی یاریی و بەرنامەکانی کەناڵی ئۆڵ سپۆرت ئامێری میکس میدیا بەکاربهێنە
+    </div>
+
     <!-- پلەیەری ڤیدیۆ -->
     <video
       id="my-video"
@@ -158,6 +190,7 @@
   <script>
     const player = videojs('my-video');
     const container = document.getElementById('videoContainer');
+    const ticker = document.getElementById('tickerBar');
 
     player.on('error', function() {
       container.classList.add('stream-offline');
@@ -170,6 +203,18 @@
     player.on('loadeddata', function() {
       container.classList.remove('stream-offline');
     });
+
+    // تایمەری دەستپێکردن و شاردنەوەی تیکەر
+    function showTicker() {
+      ticker.style.display = 'block';
+      setTimeout(function() {
+        ticker.style.display = 'none';
+      }, 10000); // ۱۰ چرکە دەمێنێتەوە
+    }
+
+    // دەستپێکردنی تیکەر ڕاستەوخۆ دوای ۳ چرکە لە پەخش و دواتر هەموو ۵ خولەک جارێک
+    setTimeout(showTicker, 3000);
+    setInterval(showTicker, 300000); // ۳۰۰,۰۰۰ میلی‌چرکە = ۵ خولەک
   </script>
 
 </body>
