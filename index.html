@@ -141,7 +141,7 @@
       }
       .ticker-bar {
         bottom: 30px;
-        font-size: 8.5px; /* بچووککردنەوەی فۆنت بۆ جێبوونەوەی تەواو لە ناو لاکێشەکە */
+        font-size: 8.5px;
         padding: 4px 10px;
         max-width: 95%;
         width: auto;
@@ -161,7 +161,7 @@
   <div class="video-container" id="videoContainer">
     
     <!-- کانتێنەری لۆگۆ و ئاگادارییەکان -->
-    <div class="logo-box">
+    <div class="logo-box" id="logoBox">
       <img src="LOGO2018.png" alt="SPORT Logo" class="player-logo">
       <div class="stream-message">
         <h2>هەموو وەرزشێک لەماڵەکەتدا</h2>
@@ -181,8 +181,7 @@
       controls
       preload="auto"
       data-setup="{}">
-      <source src="
-https://kurdtv.org/api/public/hls?u=https://prod-fastly-us-west-1.video.pscp.tv/Transcoding/v1/hls/C_YZ4LkNeYnxcDUTCLdzJJg1HgznTyXiwlPTw6NXkppWlI2IIxpKHd4gE-TkWcm3cn70Vt9ZuYp5mI4AOe6omg/transcode/us-west-1/periscope-replay-direct-prod-us-west-1-public/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCIsInZlcnNpb24iOiIyIn0.eyJFbmNvZGVyU2V0dGluZyI6ImVuY29kZXJfc2V0dGluZ183MjBwMzBfMTAiLCJIZWlnaHQiOjcyMCwiS2JwcyI6Mjc1MCwiV2lkdGgiOjEyODB9.ldktM4fCFRfkP4ZEBfZPKtlAUNAcTPkoz994YJAzWpE/dynamic_delta.m3u8?type=live" type="application/x-mpegURL">
+      <source src="https://kurdtv.org/api/public/hls?u=https://prod-fastly-us-west-1.video.pscp.tv/Transcoding/v1/hls/C_YZ4LkNeYnxcDUTCLdzJJg1HgznTyXiwlPTw6NXkppWlI2IIxpKHd4gE-TkWcm3cn70Vt9ZuYp5mI4AOe6omg/transcode/us-west-1/periscope-replay-direct-prod-us-west-1-public/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCIsInZlcnNpb24iOiIyIn0.eyJFbmNvZGVyU2V0dGluZyI6ImVuY29kZXJfc2V0dGluZ183MjBwMzBfMTAiLCJIZWlnaHQiOjcyMCwiS2JwcyI6Mjc1MCwiV2lkdGgiOjEyODB9.ldktM4fCFRfkP4ZEBfZPKtlAUNAcTPkoz994YJAzWpE/dynamic_delta.m3u8?type=live" type="application/x-mpegURL">
       تێبینی: وێبگەڕەکەت پشتگیری لەم ڤیدیۆیە ناکات.
     </video>
   </div>
@@ -192,19 +191,26 @@ https://kurdtv.org/api/public/hls?u=https://prod-fastly-us-west-1.video.pscp.tv/
 
   <script>
     const player = videojs('my-video');
-    const container = document.getElementById('videoContainer');
     const ticker = document.getElementById('tickerBar');
+    const logoBox = document.getElementById('logoBox');
 
+    // گرنگترین بەش: گواستنەوەی لۆگۆ و تیکەر بۆ ناو خودی پلەیەرەکە
+    player.ready(function() {
+      player.el().appendChild(logoBox);
+      player.el().appendChild(ticker);
+    });
+
+    // کڵاسەکان دەدرێت بە پلەیەرەکە لە جیاتی کانتێنەرەکە
     player.on('error', function() {
-      container.classList.add('stream-offline');
+      player.el().classList.add('stream-offline');
     });
 
     player.on('playing', function() {
-      container.classList.remove('stream-offline');
+      player.el().classList.remove('stream-offline');
     });
 
     player.on('loadeddata', function() {
-      container.classList.remove('stream-offline');
+      player.el().classList.remove('stream-offline');
     });
 
     // تایمەری دەستپێکردن و شاردنەوەی تیکەر
