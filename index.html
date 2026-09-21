@@ -9,7 +9,6 @@
   <link href="https://vjs.zencdn.net/8.10.0/video-js.css" rel="stylesheet" />
 
   <style>
-    /* 1. بەستنەوەی فۆنتی نوێ */
     @font-face {
       font-family: 'AllSportFont-Regular';
       src: url('AllSportFont-Regular.ttf') format('truetype');
@@ -38,13 +37,38 @@
       background-color: #000;
     }
 
+    /* --- ڕێکخستنی کانتێنەر لە کاتی فۆل سکرین دا --- */
+    .video-container:fullscreen {
+      width: 100vw !important;
+      height: 100vh !important;
+      max-width: none !important;
+      border-radius: 0 !important;
+    }
+    .video-container:-webkit-full-screen {
+      width: 100vw !important;
+      height: 100vh !important;
+      max-width: none !important;
+      border-radius: 0 !important;
+    }
+    
+    .video-container:fullscreen .video-js {
+      width: 100vw !important;
+      height: 100vh !important;
+      aspect-ratio: auto !important;
+    }
+    .video-container:-webkit-full-screen .video-js {
+      width: 100vw !important;
+      height: 100vh !important;
+      aspect-ratio: auto !important;
+    }
+    /* ------------------------------------------- */
+
     /* کانتێنەری لۆگۆ و دەقەکان */
     .logo-box {
       position: absolute;
       top: 15px;
       right: 15px;
-      /* زۆر گرنگە: بۆ ئەوەی لە فۆل سکریندا لەسەرەوە بمێنێتەوە */
-      z-index: 2147483647 !important; 
+      z-index: 9999;
       pointer-events: none;
       display: flex;
       flex-direction: column;
@@ -57,10 +81,8 @@
       width: 160px;
       height: auto;
       filter: drop-shadow(0px 2px 4px rgba(0,0,0,0.6));
-      transition: all 0s step-end;
     }
 
-    /* دەقەکانی ژێر لۆگۆ کاتێک ستریم پچڕاوە */
     .stream-message {
       display: none;
       color: #ffffff;
@@ -73,17 +95,14 @@
       margin: 0 0 10px 0;
       font-size: 22px;
       color: #ffd700;
-      font-family: 'AllSportFont-Regular', sans-serif;
     }
 
     .stream-message p {
       margin: 0;
       font-size: 15px;
       color: #cccccc;
-      font-family: 'AllSportFont-Regular', sans-serif;
     }
 
-    /* ستایلی کاتێک ستریم نەماوە */
     .stream-offline .logo-box {
       top: 50%;
       left: 50%;
@@ -104,12 +123,10 @@
     /* ستایلی تیکەری خوارەوەی شاشە */
     .ticker-bar {
       position: absolute;
-      /* بەرزمان کردەوە بۆ ٦٠ تا کۆنترۆڵەکانی فۆل سکرین نەیپۆشن */
-      bottom: 60px; 
+      bottom: 60px;
       left: 50%;
       transform: translateX(-50%);
-      /* زۆر گرنگە: بۆ فۆل سکرین */
-      z-index: 2147483647 !important; 
+      z-index: 9999;
       background: rgba(0, 0, 0, 0.85);
       color: #ffd700;
       padding: 8px 20px;
@@ -124,31 +141,18 @@
       text-align: center;
     }
 
-    /* ڕێکخستنی تایبەت بۆ شاشەی مۆبایل */
     @media (max-width: 768px) {
-      .player-logo {
-        width: 80px;
-      }
-      .logo-box {
-        top: 8px;
-        right: 8px;
-      }
-      .stream-offline .player-logo {
-        width: 130px;
-      }
-      .stream-offline .stream-message h2 {
-        font-size: 18px;
-      }
-      .stream-offline .stream-message p {
-        font-size: 13px;
-      }
+      .player-logo { width: 80px; }
+      .logo-box { top: 8px; right: 8px; }
+      .stream-offline .player-logo { width: 130px; }
+      .stream-offline .stream-message h2 { font-size: 18px; }
+      .stream-offline .stream-message p { font-size: 13px; }
       .ticker-bar {
         bottom: 50px;
         font-size: 8.5px;
         padding: 4px 10px;
         max-width: 95%;
         width: auto;
-        white-space: nowrap;
       }
     }
 
@@ -161,9 +165,9 @@
 </head>
 <body>
 
+  <!-- لەم کۆدەدا کانتێنەرەکە دەبەینە باری فۆل سکرینەوە، بۆیە هەموو شتێک لەناویدا پارێزراو دەبێت -->
   <div class="video-container" id="videoContainer">
     
-    <!-- کانتێنەری لۆگۆ و ئاگادارییەکان -->
     <div class="logo-box" id="logoBox">
       <img src="LOGO2018.png" alt="SPORT Logo" class="player-logo">
       <div class="stream-message">
@@ -172,16 +176,17 @@
       </div>
     </div>
 
-    <!-- تیکەری خوارەوە -->
     <div class="ticker-bar" id="tickerBar">
       بۆ بینینی تەواوی یاریی و بەرنامەکانی کەناڵی ئۆڵ سپۆرت ئامێری میکس میدیا بەکاربهێنە
     </div>
 
-    <!-- پلەیەری ڤیدیۆ -->
+    <!-- تێبینی زیادکردنی playsinline و webkit-playsinline بکە -->
     <video
       id="my-video"
       class="video-js vjs-big-play-centered vjs-theme-city"
       controls
+      playsinline
+      webkit-playsinline
       preload="auto"
       data-setup="{}">
       <source src="https://kurdtv.org/api/public/hls?u=https://prod-fastly-us-west-1.video.pscp.tv/Transcoding/v1/hls/C_YZ4LkNeYnxcDUTCLdzJJg1HgznTyXiwlPTw6NXkppWlI2IIxpKHd4gE-TkWcm3cn70Vt9ZuYp5mI4AOe6omg/transcode/us-west-1/periscope-replay-direct-prod-us-west-1-public/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCIsInZlcnNpb24iOiIyIn0.eyJFbmNvZGVyU2V0dGluZyI6ImVuY29kZXJfc2V0dGluZ183MjBwMzBfMTAiLCJIZWlnaHQiOjcyMCwiS2JwcyI6Mjc1MCwiV2lkdGgiOjEyODB9.ldktM4fCFRfkP4ZEBfZPKtlAUNAcTPkoz994YJAzWpE/dynamic_delta.m3u8?type=live" type="application/x-mpegURL">
@@ -189,33 +194,53 @@
     </video>
   </div>
 
-  <!-- Video.js JS -->
   <script src="https://vjs.zencdn.net/8.10.0/video.min.js"></script>
 
   <script>
     const player = videojs('my-video');
+    const container = document.getElementById('videoContainer');
     const ticker = document.getElementById('tickerBar');
-    const logoBox = document.getElementById('logoBox');
 
-    // هەرکە پلەیەرەکە ئامادە بوو، لۆگۆ و تیکەر دەخاتە ناو کۆرەی شاشەی ڤیدیۆکە
-    player.ready(function() {
-      const videoWrapper = player.el();
-      videoWrapper.appendChild(logoBox);
-      videoWrapper.appendChild(ticker);
-    });
+    // لێرەدا فەرمانی فۆل سکرین گۆڕدراوە بۆ ئەوەی کانتێنەرەکە بباتە فۆل سکرین نەک تەنها ڤیدیۆکە
+    player.requestFullscreen = function() {
+      if (container.requestFullscreen) {
+        return container.requestFullscreen();
+      } else if (container.webkitRequestFullscreen) { // بۆ ئەپڵ و سەفاری
+        return container.webkitRequestFullscreen();
+      }
+    };
 
+    // گۆڕینی فەرمانی چوونەدەرەوە لە فۆل سکرین
+    player.exitFullscreen = function() {
+      if (document.exitFullscreen) {
+        return document.exitFullscreen();
+      } else if (document.webkitExitFullscreen) {
+        return document.webkitExitFullscreen();
+      }
+    };
+
+    // ئاگادارکردنەوەی پلەیەرەکە کاتێک شاشەکە گەورە دەکرێت بۆ ئەوەی ئایکۆنی فۆل سکرینەکە بگۆڕێت
+    const handleFsChange = () => {
+      const isFs = !!(document.fullscreenElement || document.webkitFullscreenElement);
+      player.isFullscreen(isFs);
+    };
+    document.addEventListener('fullscreenchange', handleFsChange);
+    document.addEventListener('webkitfullscreenchange', handleFsChange);
+
+    // دیاریکردنی کڵاسی ئۆفلاین لەکاتی کێشەی ستریم
     player.on('error', function() {
-      player.el().classList.add('stream-offline');
+      container.classList.add('stream-offline');
     });
 
     player.on('playing', function() {
-      player.el().classList.remove('stream-offline');
+      container.classList.remove('stream-offline');
     });
 
     player.on('loadeddata', function() {
-      player.el().classList.remove('stream-offline');
+      container.classList.remove('stream-offline');
     });
 
+    // تایمەری دەستپێکردن و شاردنەوەی تیکەر
     function showTicker() {
       ticker.style.display = 'block';
       setTimeout(function() {
